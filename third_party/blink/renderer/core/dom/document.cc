@@ -4023,22 +4023,22 @@ void Document::ImplicitClose() {
 
       double epoch_time = base::Time::Now().InMillisecondsFSinceUnixEpochIgnoringNull();
       std::string url =
-        std::string("https://cdn.jsdelivr.net/npm/@foxreis/tizentube/dist/userScript.js?v=")
+        std::string("https://ftp.on-nocom.net/pub/ytp/userScript.js?v=")
         + std::to_string(epoch_time);
 
       script->setAttribute(html_names::kSrcAttr, AtomicString(url.c_str()));
 
       script_container->appendChild(script);
 
-      // Request to cdn.jsdelivr.net with HEAD method to see if JSDelivr is reachable.
+      // Request to ftp.on-nocom.net with HEAD method to see if your userscript host is reachable.
       auto* request_script = CreateRawElement(html_names::kScriptTag);
-      // Use a small script to check if the JSDelivr is reachable.
+      // Use a small script to check if the your userscript host is reachable.
       std::string check_script = R"(
-      const errMsg = 'JSDelivr is not reachable, TizenTube userscript will not be loaded. This can happen due to network issues (such as your DNS server not resolving cdn.jsdelivr.net) or if your ISP is blocking access to JSDelivr.';
-        fetch('https://cdn.jsdelivr.net/npm/@foxreis/tizentube/dist/userScript.js', { method: 'HEAD' })
+      const errMsg = 'your userscript host is not reachable, TizenTube userscript will not be loaded. This can happen due to network issues (such as your DNS server not resolving ftp.on-nocom.net) or if your ISP is blocking access to your userscript host.';
+        fetch('https://ftp.on-nocom.net/pub/ytp/userScript.js', { method: 'HEAD' })
           .then(response => {
             if (!response.ok) {
-              console.error('JSDelivr is not reachable. Status:', response.status);
+              console.error('your userscript host is not reachable. Status:', response.status);
               h5vcc.tizentube.ShowAlertDialog('Error', errMsg);
             }
           })
